@@ -68,6 +68,28 @@ app.post("/getStock", async (req, res) => {
     })
 })
 
+app.post("/criarFatura", async (req, res) => {
+    let componentes = req.body;
+    console.log(componentes);
+
+    // const options = {
+    //     'method': 'GET',
+    //     'url': `${PRIMAVERA_BASE_URL}/materialscore/materialsItems/odata?filter=${filter}`,
+    //     'headers': {
+    //         'Authorization': `Bearer ${await getToken()}`
+    //     }
+    // }
+
+    // request(options, function (err, response) {
+    //     if (err) throw new Error(err);
+    //     const obj = JSON.parse(response.body);
+
+    //     if(obj) {
+    //         res.status(200).json(obj);
+    //     }     
+    // })
+})
+
 // EndPoint
 app.get('/', (req,res)=>{
 
