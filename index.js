@@ -67,7 +67,12 @@ app.post("/getItemsForSale", async (req, res) => {
         const obj = JSON.parse(response.body);
 
         if(obj) {
-            res.status(200).json(obj);
+            let array = [];
+
+            obj.items.forEach(element => {
+                array.push(element.itemKey);
+            });
+            res.status(200).json(array);
         }     
     })
 })
