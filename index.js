@@ -74,8 +74,8 @@ app.post("/getItemsForSale", async (req, res) => {
 
 app.post("/criarFatura", async (req, res) => {
     let item = req.body.salesItem;
-    let buyerCustomerParty = req.body.buyerCustomerParty;
-	let email = req.body.email;
+    let buyerCustomerParty = req.body.Cliente;
+	let email = req.body.Email;
 	//data e converter para rfc3339
 	let dateTime = new Date();
 	let dateTimeFormatted = dateTime.toISOString();
@@ -148,24 +148,24 @@ app.post("/criarEncomenda", async (req, res) => {
 		});
 		return;
 	}
-	if (typeof req.body.buyerCustomerParty === "undefined") {
+	if (typeof req.body.Cliente === "undefined") {
 		res.status(400).json({
 			status: false,
-			message: "buyerCustomerParty inválido: " + req.body.buyerCustomerParty
+			message: "buyerCustomerParty inválido: " + req.body.Cliente
 		});
 		return;
 	}
-	if (typeof req.body.email === "undefined") {
+	if (typeof req.body.Email === "undefined") {
 		res.status(400).json({
 			status: false,
-			message: "email inválido: " + req.body.email
+			message: "email inválido: " + req.body.Email
 		});
 		return;
 	}
 
     let salesItem = req.body.salesItem;
-    let buyerCustomerParty = req.body.buyerCustomerParty;
-	let email = req.body.email;
+    let buyerCustomerParty = req.body.Cliente
+	let email = req.body.Email;
 	//data e converter para rfc3339
 	let dateTime = new Date();
 	let dateTimeFormatted = dateTime.toISOString();
