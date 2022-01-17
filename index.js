@@ -41,22 +41,10 @@ app.get('/getSales', async (req, res)=>{
     })
 })
 
-app.post("/getItemsForSale", async (req, res) => {
-    let componentes = req.body.componentes;
-    console.log(componentes);
-
-    let filter = `ItemKey eq '${componentes[0]}'`;
-    if (componentes.length > 1) {
-        for(let i = 1; i < componentes.length; i++){
-            filter += ` or ItemKey eq '${componentes[i]}'`;
-        }
-    }
-
-    console.log(filter)
-
+app.get("/getItemsForSale", async (req, res) => {
     const options = {
         'method': 'GET',
-        'url': `${PRIMAVERA_BASE_URL}/salesCore/salesItems/odata?filter=${filter}`,
+        'url': `${PRIMAVERA_BASE_URL}/salesCore/salesItems/odata`,
         'headers': {
             'Authorization': `Bearer ${await getToken()}`
         }
