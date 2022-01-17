@@ -55,10 +55,15 @@ app.get("/getItemsForSale", async (req, res) => {
         const obj = JSON.parse(response.body);
 
         if(obj) {
+            console.log(obj);
             let array = [];
 
             obj.items.forEach(element => {
-                array.push(element.itemKey);
+                let car = {
+                    Marca: element.brand,
+                    Modelo: element.itemKey
+                }
+                array.push(car);
             });
             res.status(200).json(array);
         }     
