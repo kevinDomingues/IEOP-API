@@ -78,6 +78,8 @@ app.get("/getItemsForSale", async (req, res) => {
 })
 
 app.post("/criarFatura", async (req, res) => {
+    console.log(req.body);
+
     let item = req.body.salesItem;
     let buyerCustomerParty = req.body.Cliente;
 	let email = req.body.Email;
@@ -145,32 +147,38 @@ app.post("/criarFatura", async (req, res) => {
     })
 })
 
-app.post("/criarEncomenda", async (req, res) => {
-    if (typeof req.body.salesItem === "undefined") {
+app.post("/criarEncomenda", async (req, res) => { 
+    let buyerCustomerParty = '';
+    let Email = '';
+    if (typeof req.body.KeyCarro === "undefined") {
 		res.status(400).json({
 			status: false,
-			message: "salesItem inválido: " + req.body.salesItem
+			message: "salesItem inválido: " + req.body.KeyCarro
 		});
 		return;
 	}
 	if (typeof req.body.Cliente === "undefined") {
-		res.status(400).json({
+
+        buyerCustomerParty = 'INDIF'
+		/*res.status(400).json({
 			status: false,
 			message: "buyerCustomerParty inválido: " + req.body.Cliente
 		});
-		return;
+		return; */
 	}
 	if (typeof req.body.Email === "undefined") {
-		res.status(400).json({
+		/*res.status(400).json({
 			status: false,
 			message: "email inválido: " + req.body.Email
 		});
-		return;
+		return; */
+
+        Email="projeto3ipvc@.pt"
 	}
 
-    let salesItem = req.body.salesItem;
-    let buyerCustomerParty = req.body.Cliente
-	let email = req.body.Email;
+    let salesItem = req.body.KeyCarro;
+   /* let buyerCustomerParty = req.body.Cliente;
+	let email = req.body.Email; */
 	//data e converter para rfc3339
 	let dateTime = new Date();
 	let dateTimeFormatted = dateTime.toISOString();
@@ -182,7 +190,7 @@ app.post("/criarEncomenda", async (req, res) => {
         "company": "SI",
         "documentType": "ECL",
         "buyerCustomerParty": buyerCustomerParty,
-        "emailTo": email,
+        "emailTo": Email,
         "documentDate": dateTimeFormatted,
         "documentLines": [{ "salesItem": salesItem }]
     }
@@ -198,7 +206,6 @@ app.post("/criarEncomenda", async (req, res) => {
     }
 
     request(options, async function (err, response, body) {
-        console.log(response);
         if (err){
             res.status(400).json({
                 status: false,

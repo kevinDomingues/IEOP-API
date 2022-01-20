@@ -1,0 +1,37 @@
+[
+    {
+        "KeyCarro": "MERCEDES-BENZ_",
+        "Marca": "MERCEDES-BENZ",
+        "Modelo": "Mercedes-Benz A 200 AMG Line",
+        "Estado": "Usado-Semi-Novo",
+        "Preco": 6.99
+    },
+    {
+        "KeyCarro": "AUDI_",
+        "Marca": "AUDI",
+        "Modelo": "Audi A3",
+        "Estado": "Usado-Semi-Novo",
+        "Preco": 5.99
+    },
+    {
+        "KeyCarro": "SEAT_",
+        "Marca": "SEAT",
+        "Modelo": "SEAT Leon SC 2.0 TDi FR S/S",
+        "Estado": "Usado-Semi-Novo",
+        "Preco": 4.99
+    },
+    {
+        "KeyCarro": "BMW_",
+        "Marca": "BMW",
+        "Modelo": "BMW 120 D",
+        "Estado": "Usado-Semi-Novo",
+        "Preco": 6.99
+    },
+    {
+        "KeyCarro": "BMW",
+        "Marca": "BMW",
+        "Modelo": "BMW 320 D Touring Auto Pack M",
+        "Estado": "Usado-Semi-Novo",
+        "Preco": 7.99
+    }
+]
