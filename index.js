@@ -55,15 +55,22 @@ app.get("/getItemsForSale", async (req, res) => {
         const obj = JSON.parse(response.body);
 
         if(obj) {
-            console.log(obj);
+            // console.log(obj);
             let array = [];
 
             obj.items.forEach(element => {
+              try{
                 let car = {
+                    KeyCarro: element.itemKey,
                     Marca: element.brand,
-                    Modelo: element.itemKey
+                    Modelo: element.description,
+                    Estado: "Usado-Semi-Novo",
+                    Preco: element.priceListLines[0].priceAmountAmount
                 }
                 array.push(car);
+              }catch(error){
+                console.log('Não enviado - Não contém os requisitos');
+              }
             });
             res.status(200).json(array);
         }     
