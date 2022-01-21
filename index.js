@@ -80,7 +80,7 @@ app.get("/getItemsForSale", async (req, res) => {
 app.post("/criarFatura", async (req, res) => {
     console.log(req.body);
 
-    let item = req.body.salesItem;
+    let item = req.body.KeyCarro;
     let buyerCustomerParty = req.body.Cliente;
 	let email = req.body.Email;
 	//data e converter para rfc3339
@@ -99,7 +99,7 @@ app.post("/criarFatura", async (req, res) => {
         "buyerCustomerParty": buyerCustomerParty,
         "emailTo": email,
         "documentDate": dateTimeFormatted,
-        "documentLines": documentLines
+        "documentLines": [documentLines]
     }
 
     const options = {
@@ -112,10 +112,64 @@ app.post("/criarFatura", async (req, res) => {
         json: true
     }
 
-    const filename = `FATURA_${moment().unix()}.pdf`;
-    const filepath = `./public/${filename}`;
-    let file = fs.createWriteStream(filepath);
-    let print = `${PRIMAVERA_BASE_URL}/billing/invoices/${body}/print`;
+    request(options, async function (err, response, body) {
+        if (err){
+            res.status(400).json({
+                status: false,
+                message: "Dados inválidos"
+            });
+            return;
+        }
+        if (body) {
+            res.status(201).json({
+                status: true,
+                message: body
+            });
+        }
+    })
+})
+
+app.post("/acertarStock", async (req, res) => {
+    console.log(req.body);
+
+    let item = req.body.KeyCarro;
+    let buyerCustomerParty = req.body.Cliente;
+	let email = req.body.Email;
+	//data e converter para rfc3339
+	let dateTime = new Date();
+	let dateTimeFormatted = dateTime.toISOString();
+
+    let documentLines = {
+        salesItem: item,
+        quantity: 1,
+        warehouse: "01"
+    }
+
+    let body = {
+        "company": "SI",
+        "documentType": "FA",
+        "buyerCustomerParty": buyerCustomerParty,
+        "emailTo": email,
+        "documentDate": dateTimeFormatted,
+        "documentLines": [documentLines]
+    }
+
+    const options = {
+        'method': 'POST',
+        'url': `${PRIMAVERA_BASE_URL}/billing/invoices`,
+        'headers': {
+            'Authorization': `Bearer ${await getToken()}`,
+        },
+        'body': body,
+        json: true
+    }
+
+    
+
+    // const filename = `FATURA_${moment().unix()}.pdf`;
+    // const filepath = `./public/${filename}`;
+    // let file = fs.createWriteStream(filepath);
+    // let print = `${PRIMAVERA_BASE_URL}/billing/invoices/${body}/print`;
 
     request(options, async function (err, response, body) {
         if (err){
@@ -126,23 +180,10 @@ app.post("/criarFatura", async (req, res) => {
             return;
         }
         if (body) {
-            request({
-                uri: print,
-                headers: {
-                    'Authorization': `Bearer ${await getToken()}`,
-                    'Accept-Encoding': 'gzip, deflate, br',
-                    'Cache-Control': 'max-age=0',
-                    'Connection': 'keep-alive',
-                    'Upgrade-Insecure-Requests': '1'
-                }
-            }).pipe(file).on('finish', () => {
-                res.status(200).json({
-                    link: `http://localhost:3000/files?filename=${filename}`
-                })
-            }).on('error', (error) => {
-                console.log(error)
-                res.status(500).json({})
-            })
+            res.status(201).json({
+                status: true,
+                message: body
+            });
         }
     })
 })
