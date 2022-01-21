@@ -95,7 +95,6 @@ app.post("/criarFatura", async (req, res) => {
     let item = req.body.KeyCarro;
     let buyerCustomerParty = req.body.Cliente;
 	let email = req.body.Email;
-	//data e converter para rfc3339
 	let dateTime = new Date();
 	let dateTimeFormatted = dateTime.toISOString();
 
