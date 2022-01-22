@@ -247,6 +247,7 @@ app.post("/criarEncomenda", async (req, res) => {
 		return;
 	}
 
+    let email = req.body.Email;
     let salesItem = req.body.KeyCarro;
     let buyerCustomerParty = req.body.Cliente;
 	//data e converter para rfc3339
@@ -260,7 +261,7 @@ app.post("/criarEncomenda", async (req, res) => {
         "company": "SI",
         "documentType": "ECL",
         "buyerCustomerParty": buyerCustomerParty,
-        "emailTo": Email,
+        "emailTo": email,
         "documentDate": dateTimeFormatted,
         "documentLines": [{ "salesItem": salesItem }]
     }
