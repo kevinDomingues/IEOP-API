@@ -299,6 +299,60 @@ app.post("/criarEncomenda", async (req, res) => {
     })
 })
 
+app.post("/lancarEmail", async (req, res) => {
+    if (typeof req.body.Carro === "undefined") {
+		res.status(400).json({
+			status: false,
+			message: "Carro inválido: " + req.body.KeyCarro
+		});
+		return;
+	}
+	if (typeof req.body.Cliente === "undefined") {
+		res.status(400).json({
+			status: false,
+			message: "Cliente inválido: " + req.body.Cliente
+		});
+		return;
+	}
+    let carro = req.body.Carro;
+    let cliente = req.body.Cliente;
+    let preco = req.body.Preco;
+	let email = req.body.Email;
+
+    // const options = {
+    //     'method': 'POST',
+    //     'url': `${PRIMAVERA_BASE_URL}/billing/invoices`,
+    //     'headers': {
+    //         'Authorization': `Bearer ${await getToken()}`,
+    //     },
+    //     'body': body,
+    //     json: true
+    // }
+
+    try{
+        fs.appendFileSync("C:/IEOP/dadosMail.csv", `${carro},${cliente},${preco},${email},porEnviar\n`);
+        res.status(200).json("Guardado no ficheiro");
+    } catch(err){
+        console.log(err);
+    }
+
+    // request(options, async function (err, response, body) {
+    //     if (err){
+    //         res.status(400).json({
+    //             status: false,
+    //             message: "Dados inválidos"
+    //         });
+    //         return;
+    //     }
+    //     if (body) {
+    //         res.status(201).json({
+    //             status: true,
+    //             message: body
+    //         });
+    //     }
+    // })
+})
+
 // EndPoint
 app.get('/', (req,res)=>{
 
