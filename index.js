@@ -110,7 +110,8 @@ app.post("/criarFatura", async (req, res) => {
         "buyerCustomerParty": buyerCustomerParty,
         "emailTo": email,
         "documentDate": dateTimeFormatted,
-        "documentLines": [documentLines]
+        "documentLines": [documentLines],
+        "currency": "EUR"
     }
 
     const options = {
