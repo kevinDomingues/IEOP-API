@@ -303,7 +303,7 @@ app.post("/lancarEmail", async (req, res) => {
     if (typeof req.body.Carro === "undefined") {
 		res.status(400).json({
 			status: false,
-			message: "Carro inválido: " + req.body.KeyCarro
+			message: "Carro: " + req.body.KeyCarro
 		});
 		return;
 	}
